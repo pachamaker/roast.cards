@@ -1,38 +1,54 @@
 import { ARCHETYPES } from "../../../data/archetypes";
+import type { ArchetypeMatrix } from "../../../data/archetypes";
 import type { Answers } from "../../quiz/model/types";
 
-export const calculateArchetype = (s: Answers) => {
-  if (Object.values(s).every((v) => v >= 90)) return ARCHETYPES.son_of_moms_friend;
-  if (Object.values(s).every((v) => v <= 10)) return ARCHETYPES.survival_error;
+const PARAM_WEIGHTS: Record<keyof ArchetypeMatrix, number> = {
+  // УРОВЕНЬ 1: БАЗОВЫЕ ВОЗМОЖНОСТИ (Определяют "стадию жизни")
+  money: 1.8,     // Самый сильный фильтр
+  time: 1.6,      
+  energy: 1.5,    
 
-  if (s.money >= 90 && s.time <= 30) return ARCHETYPES.galley_slave;
-  if (s.money >= 90 && s.intellect <= 40) return ARCHETYPES.major_nepo;
+  // УРОВЕНЬ 2: СОЦИАЛЬНЫЙ СТАТУС И РОЛЬ
+  freedom: 1.4,   
+  intellect: 1.3, 
+  social: 1.1,    
 
-  if (s.money <= 20 && s.energy >= 80 && s.intellect <= 40) return ARCHETYPES.crypto_hamster;
-  if (s.intellect >= 80 && s.energy >= 80 && s.money <= 20) return ARCHETYPES.startup_hobo;
-  if (s.freedom >= 80 && s.nerves <= 40) return ARCHETYPES.relocant;
-  if (s.intellect <= 30 && s.energy >= 70 && s.social >= 60) return ARCHETYPES.wish_master;
-  if (s.intellect >= 80 && s.social >= 70 && s.money <= 40) return ARCHETYPES.taxi_philosopher;
-  if (s.money <= 40 && s.time <= 40 && s.nerves <= 40) return ARCHETYPES.wb_addict;
-  if (s.social >= 90 && s.nerves <= 30) return ARCHETYPES.dating_veteran;
-  if (s.health >= 90 && s.intellect >= 70 && s.freedom <= 40) return ARCHETYPES.biohacker;
-  if (s.intellect >= 90 && s.social <= 20 && s.nerves >= 80) return ARCHETYPES.gaslighter;
+  // УРОВЕНЬ 3: ПОКАЗАТЕЛИ УСПЕШНОСТИ / ЦЕНА (Финальные штрихи)
+  health: 1.0,    
+  nerves: 1.0    
+};
 
-  if (s.money >= 60 && s.nerves <= 40 && s.energy >= 60) return ARCHETYPES.hustler_scheme;
-  if (s.intellect >= 90 && s.money <= 30) return ARCHETYPES.sad_genius;
-  if (s.health >= 80 && s.intellect <= 50) return ARCHETYPES.gym_rat;
-  if (s.freedom >= 80 && s.money <= 50) return ARCHETYPES.bali_bum;
-  if (s.energy >= 90 && s.time <= 20) return ARCHETYPES.grindset_psycho;
-  if (s.social >= 80 && s.nerves <= 50) return ARCHETYPES.insta_fake;
-  if (s.nerves <= 30 && s.time >= 70) return ARCHETYPES.doom_scroller;
-  if (s.nerves <= 20 && s.intellect >= 60) return ARCHETYPES.anxiety_prime;
-  if (s.social <= 20 && s.time >= 60) return ARCHETYPES.hikka;
-  if (s.energy >= 70 && s.money <= 30) return ARCHETYPES.busy_broke;
-  if (s.intellect >= 80 && s.social <= 30) return ARCHETYPES.bore_nerd;
-  if (s.time <= 40 && s.health <= 40) return ARCHETYPES.weekend_alcoholic;
-  if (s.health >= 70 && s.money <= 30 && s.social >= 60) return ARCHETYPES.moms_handsome;
-  if (s.energy >= 80 && s.intellect <= 30) return ARCHETYPES.clumsy;
-  if (s.freedom <= 20 && s.money <= 40) return ARCHETYPES.credit_slave;
+const BASE_KEYS: Array<keyof ArchetypeMatrix> = ["money", "time", "energy"];
+const BASE_FACTOR = 0.6;
+const SUPER_FACTOR = 0.4;
 
-  return ARCHETYPES.normie;
+const calculateWeightedDistance = (
+  userStats: Answers,
+  archetypeMatrix: ArchetypeMatrix,
+  keys?: Array<keyof ArchetypeMatrix>
+) => {
+  let distance = 0;
+  (keys ?? (Object.keys(archetypeMatrix) as Array<keyof ArchetypeMatrix>)).forEach((key) => {
+    const value = userStats[key] ?? 0;
+    const weight = PARAM_WEIGHTS[key] ?? 1;
+    distance += weight * Math.pow(value - archetypeMatrix[key], 2);
+  });
+  return Math.sqrt(distance);
+};
+
+export const calculateArchetype = (userStats: Answers) => {
+  let minDistance = Infinity;
+  let bestArchetype = ARCHETYPES.normie;
+
+  Object.values(ARCHETYPES).forEach((archetype) => {
+    const baseDistance = calculateWeightedDistance(userStats, archetype.matrix, BASE_KEYS);
+    const superDistance = calculateWeightedDistance(userStats, archetype.matrix);
+    const totalDistance = baseDistance * BASE_FACTOR + superDistance * SUPER_FACTOR;
+    if (totalDistance < minDistance) {
+      minDistance = totalDistance;
+      bestArchetype = archetype;
+    }
+  });
+
+  return bestArchetype;
 };

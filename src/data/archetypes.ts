@@ -65,7 +65,312 @@ export interface Archetype {
   color: string;
   icon: LucideIcon;
   image?: string;
+  matrix: ArchetypeMatrix;
 }
+
+export type ArchetypeMatrix = {
+  time: number;
+  money: number;
+  energy: number;
+  health: number;
+  nerves: number;
+  intellect: number;
+  social: number;
+  freedom: number;
+};
+
+const ARCHETYPE_MATRIX: Record<ArchetypeId, ArchetypeMatrix> = {
+  son_of_moms_friend: {
+    time: 100,
+    money: 100,
+    energy: 100,
+    health: 100,
+    nerves: 100,
+    intellect: 100,
+    social: 100,
+    freedom: 100
+  },
+  survival_error: {
+    time: 0,
+    money: 0,
+    energy: 0,
+    health: 0,
+    nerves: 0,
+    intellect: 0,
+    social: 0,
+    freedom: 0
+  },
+  galley_slave: {
+    time: 0,
+    money: 100,
+    energy: 0,
+    health: 50,
+    nerves: 0,
+    intellect: 100,
+    social: 50,
+    freedom: 0
+  },
+  major_nepo: {
+    time: 100,
+    money: 100,
+    energy: 100,
+    health: 100,
+    nerves: 100,
+    intellect: 0,
+    social: 100,
+    freedom: 50
+  },
+  hustler_scheme: {
+    time: 0,
+    money: 100,
+    energy: 100,
+    health: 50,
+    nerves: 0,
+    intellect: 50,
+    social: 100,
+    freedom: 100
+  },
+  crypto_hamster: {
+    time: 50,
+    money: 0,
+    energy: 100,
+    health: 50,
+    nerves: 0,
+    intellect: 0,
+    social: 50,
+    freedom: 100
+  },
+  startup_hobo: {
+    time: 0,
+    money: 0,
+    energy: 100,
+    health: 50,
+    nerves: 0,
+    intellect: 100,
+    social: 100,
+    freedom: 100
+  },
+  credit_slave: {
+    time: 0,
+    money: 0,
+    energy: 0,
+    health: 50,
+    nerves: 0,
+    intellect: 50,
+    social: 50,
+    freedom: 0
+  },
+  busy_broke: {
+    time: 0,
+    money: 0,
+    energy: 100,
+    health: 50,
+    nerves: 0,
+    intellect: 50,
+    social: 100,
+    freedom: 0
+  },
+  grindset_psycho: {
+    time: 0,
+    money: 100,
+    energy: 100,
+    health: 0,
+    nerves: 0,
+    intellect: 100,
+    social: 0,
+    freedom: 0
+  },
+  gym_rat: {
+    time: 0,
+    money: 50,
+    energy: 100,
+    health: 100,
+    nerves: 100,
+    intellect: 0,
+    social: 0,
+    freedom: 50
+  },
+  bali_bum: {
+    time: 100,
+    money: 0,
+    energy: 50,
+    health: 100,
+    nerves: 100,
+    intellect: 50,
+    social: 50,
+    freedom: 100
+  },
+  relocant: {
+    time: 50,
+    money: 50,
+    energy: 50,
+    health: 100,
+    nerves: 0,
+    intellect: 100,
+    social: 0,
+    freedom: 100
+  },
+  wish_master: {
+    time: 100,
+    money: 50,
+    energy: 100,
+    health: 100,
+    nerves: 100,
+    intellect: 0,
+    social: 100,
+    freedom: 100
+  },
+  biohacker: {
+    time: 0,
+    money: 100,
+    energy: 100,
+    health: 100,
+    nerves: 50,
+    intellect: 100,
+    social: 0,
+    freedom: 0
+  },
+  wb_addict: {
+    time: 50,
+    money: 0,
+    energy: 50,
+    health: 50,
+    nerves: 0,
+    intellect: 50,
+    social: 50,
+    freedom: 0
+  },
+  sad_genius: {
+    time: 100,
+    money: 0,
+    energy: 0,
+    health: 50,
+    nerves: 0,
+    intellect: 100,
+    social: 0,
+    freedom: 100
+  },
+  taxi_philosopher: {
+    time: 100,
+    money: 0,
+    energy: 50,
+    health: 50,
+    nerves: 100,
+    intellect: 100,
+    social: 100,
+    freedom: 50
+  },
+  insta_fake: {
+    time: 0,
+    money: 50,
+    energy: 100,
+    health: 100,
+    nerves: 0,
+    intellect: 50,
+    social: 100,
+    freedom: 0
+  },
+  dating_veteran: {
+    time: 50,
+    money: 50,
+    energy: 0,
+    health: 50,
+    nerves: 0,
+    intellect: 50,
+    social: 100,
+    freedom: 0
+  },
+  doom_scroller: {
+    time: 100,
+    money: 50,
+    energy: 0,
+    health: 0,
+    nerves: 0,
+    intellect: 100,
+    social: 0,
+    freedom: 0
+  },
+  gaslighter: {
+    time: 50,
+    money: 100,
+    energy: 100,
+    health: 100,
+    nerves: 100,
+    intellect: 100,
+    social: 0,
+    freedom: 100
+  },
+  anxiety_prime: {
+    time: 50,
+    money: 50,
+    energy: 0,
+    health: 0,
+    nerves: 0,
+    intellect: 100,
+    social: 50,
+    freedom: 0
+  },
+  hikka: {
+    time: 100,
+    money: 0,
+    energy: 0,
+    health: 0,
+    nerves: 50,
+    intellect: 100,
+    social: 0,
+    freedom: 100
+  },
+  bore_nerd: {
+    time: 50,
+    money: 50,
+    energy: 50,
+    health: 50,
+    nerves: 100,
+    intellect: 100,
+    social: 0,
+    freedom: 0
+  },
+  weekend_alcoholic: {
+    time: 0,
+    money: 50,
+    energy: 0,
+    health: 0,
+    nerves: 0,
+    intellect: 50,
+    social: 100,
+    freedom: 0
+  },
+  moms_handsome: {
+    time: 100,
+    money: 0,
+    energy: 100,
+    health: 100,
+    nerves: 100,
+    intellect: 0,
+    social: 100,
+    freedom: 50
+  },
+  clumsy: {
+    time: 100,
+    money: 50,
+    energy: 100,
+    health: 50,
+    nerves: 100,
+    intellect: 0,
+    social: 50,
+    freedom: 100
+  },
+  normie: {
+    time: 50,
+    money: 50,
+    energy: 50,
+    health: 50,
+    nerves: 50,
+    intellect: 50,
+    social: 50,
+    freedom: 50
+  }
+};
 
 export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
   son_of_moms_friend: {
@@ -76,7 +381,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ЛЕГЕНДА",
     color: "bg-yellow-500",
     icon: Crown,
-    image: "/assets/archetypes/son_of_moms_friend.webp"
+    image: "/assets/archetypes/son_of_moms_friend.webp",
+    matrix: ARCHETYPE_MATRIX.son_of_moms_friend,
   },
   survival_error: {
     id: "survival_error",
@@ -86,7 +392,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "МУСОР",
     color: "bg-gray-600",
     icon: Ghost,
-    image: "/assets/archetypes/survival_error.webp"
+    image: "/assets/archetypes/survival_error.webp",
+    matrix: ARCHETYPE_MATRIX.survival_error,
   },
   galley_slave: {
     id: "galley_slave",
@@ -96,7 +403,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ЭПИК",
     color: "bg-emerald-600",
     icon: Briefcase,
-    image: "/assets/archetypes/galley_slave.webp"
+    image: "/assets/archetypes/galley_slave.webp",
+    matrix: ARCHETYPE_MATRIX.galley_slave,
   },
   major_nepo: {
     id: "major_nepo",
@@ -106,7 +414,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "РЕДКИЙ",
     color: "bg-purple-500",
     icon: Crown,
-    image: "/assets/archetypes/major_nepo.webp"
+    image: "/assets/archetypes/major_nepo.webp",
+    matrix: ARCHETYPE_MATRIX.major_nepo,
   },
   hustler_scheme: {
     id: "hustler_scheme",
@@ -116,7 +425,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "РЕДКИЙ",
     color: "bg-slate-800",
     icon: Zap,
-    image: "/assets/archetypes/hustler_scheme.webp"
+    image: "/assets/archetypes/hustler_scheme.webp",
+    matrix: ARCHETYPE_MATRIX.hustler_scheme,
   },
   crypto_hamster: {
     id: "crypto_hamster",
@@ -126,7 +436,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ОБЫЧНЫЙ",
     color: "bg-yellow-600",
     icon: TrendingDown,
-    image: "/assets/archetypes/crypto_hamster.webp"
+    image: "/assets/archetypes/crypto_hamster.webp",
+    matrix: ARCHETYPE_MATRIX.crypto_hamster,
   },
   startup_hobo: {
     id: "startup_hobo",
@@ -136,7 +447,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "РЕДКИЙ",
     color: "bg-indigo-500",
     icon: Rocket,
-    image: "/assets/archetypes/startup_hobo.webp"
+    image: "/assets/archetypes/startup_hobo.webp",
+    matrix: ARCHETYPE_MATRIX.startup_hobo,
   },
   credit_slave: {
     id: "credit_slave",
@@ -146,7 +458,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ЭПИК",
     color: "bg-red-800",
     icon: Barcode,
-    image: "/assets/archetypes/credit_slave.webp"
+    image: "/assets/archetypes/credit_slave.webp",
+    matrix: ARCHETYPE_MATRIX.credit_slave,
   },
   busy_broke: {
     id: "busy_broke",
@@ -156,7 +469,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ОБЫЧНЫЙ",
     color: "bg-stone-600",
     icon: RefreshCw,
-    image: "/assets/archetypes/busy_broke.webp"
+    image: "/assets/archetypes/busy_broke.webp",
+    matrix: ARCHETYPE_MATRIX.busy_broke,
   },
   grindset_psycho: {
     id: "grindset_psycho",
@@ -166,7 +480,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ЭПИК",
     color: "bg-red-600",
     icon: Zap,
-    image: "/assets/archetypes/grindset_psycho.webp"
+    image: "/assets/archetypes/grindset_psycho.webp",
+    matrix: ARCHETYPE_MATRIX.grindset_psycho,
   },
   gym_rat: {
     id: "gym_rat",
@@ -176,7 +491,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ОБЫЧНЫЙ",
     color: "bg-orange-600",
     icon: Dumbbell,
-    image: "/assets/archetypes/gym_rat.webp"
+    image: "/assets/archetypes/gym_rat.webp",
+    matrix: ARCHETYPE_MATRIX.gym_rat,
   },
   bali_bum: {
     id: "bali_bum",
@@ -186,7 +502,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "РЕДКИЙ",
     color: "bg-cyan-500",
     icon: Plane,
-    image: "/assets/archetypes/bali_bum.webp"
+    image: "/assets/archetypes/bali_bum.webp",
+    matrix: ARCHETYPE_MATRIX.bali_bum,
   },
   relocant: {
     id: "relocant",
@@ -196,7 +513,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "РЕДКИЙ",
     color: "bg-blue-400",
     icon: Plane,
-    image: "/assets/archetypes/relocant.webp"
+    image: "/assets/archetypes/relocant.webp",
+    matrix: ARCHETYPE_MATRIX.relocant,
   },
   wish_master: {
     id: "wish_master",
@@ -206,7 +524,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ОБЫЧНЫЙ",
     color: "bg-pink-400",
     icon: Sparkles,
-    image: "/assets/archetypes/wish_master.webp"
+    image: "/assets/archetypes/wish_master.webp",
+    matrix: ARCHETYPE_MATRIX.wish_master,
   },
   biohacker: {
     id: "biohacker",
@@ -216,7 +535,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "РЕДКИЙ",
     color: "bg-teal-500",
     icon: Activity,
-    image: "/assets/archetypes/biohacker.webp"
+    image: "/assets/archetypes/biohacker.webp",
+    matrix: ARCHETYPE_MATRIX.biohacker,
   },
   wb_addict: {
     id: "wb_addict",
@@ -226,7 +546,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ОБЫЧНЫЙ",
     color: "bg-purple-600",
     icon: ShoppingBag,
-    image: "/assets/archetypes/wb_addict.webp"
+    image: "/assets/archetypes/wb_addict.webp",
+    matrix: ARCHETYPE_MATRIX.wb_addict,
   },
   sad_genius: {
     id: "sad_genius",
@@ -236,7 +557,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "РЕДКИЙ",
     color: "bg-indigo-600",
     icon: ScanLine,
-    image: "/assets/archetypes/sad_genius.webp"
+    image: "/assets/archetypes/sad_genius.webp",
+    matrix: ARCHETYPE_MATRIX.sad_genius,
   },
   taxi_philosopher: {
     id: "taxi_philosopher",
@@ -246,7 +568,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ЭПИК",
     color: "bg-yellow-700",
     icon: BookOpen,
-    image: "/assets/archetypes/taxi_philosopher.webp"
+    image: "/assets/archetypes/taxi_philosopher.webp",
+    matrix: ARCHETYPE_MATRIX.taxi_philosopher,
   },
   insta_fake: {
     id: "insta_fake",
@@ -256,7 +579,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ОБЫЧНЫЙ",
     color: "bg-pink-500",
     icon: Sparkles,
-    image: "/assets/archetypes/insta_fake.webp"
+    image: "/assets/archetypes/insta_fake.webp",
+    matrix: ARCHETYPE_MATRIX.insta_fake,
   },
   dating_veteran: {
     id: "dating_veteran",
@@ -266,7 +590,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ЭПИК",
     color: "bg-rose-500",
     icon: HeartCrack,
-    image: "/assets/archetypes/dating_veteran.webp"
+    image: "/assets/archetypes/dating_veteran.webp",
+    matrix: ARCHETYPE_MATRIX.dating_veteran,
   },
   doom_scroller: {
     id: "doom_scroller",
@@ -276,7 +601,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ОБЫЧНЫЙ",
     color: "bg-slate-500",
     icon: Meh,
-    image: "/assets/archetypes/doom_scroller.webp"
+    image: "/assets/archetypes/doom_scroller.webp",
+    matrix: ARCHETYPE_MATRIX.doom_scroller,
   },
   gaslighter: {
     id: "gaslighter",
@@ -286,7 +612,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ТОКСИК",
     color: "bg-red-900",
     icon: MessageCircle,
-    image: "/assets/archetypes/gaslighter.webp"
+    image: "/assets/archetypes/gaslighter.webp",
+    matrix: ARCHETYPE_MATRIX.gaslighter,
   },
   anxiety_prime: {
     id: "anxiety_prime",
@@ -296,7 +623,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ОБЫЧНЫЙ",
     color: "bg-violet-600",
     icon: Frown,
-    image: "/assets/archetypes/anxiety_prime.webp"
+    image: "/assets/archetypes/anxiety_prime.webp",
+    matrix: ARCHETYPE_MATRIX.anxiety_prime,
   },
   hikka: {
     id: "hikka",
@@ -306,7 +634,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "РЕДКИЙ",
     color: "bg-zinc-800",
     icon: Lock,
-    image: "/assets/archetypes/hikka.webp"
+    image: "/assets/archetypes/hikka.webp",
+    matrix: ARCHETYPE_MATRIX.hikka,
   },
   bore_nerd: {
     id: "bore_nerd",
@@ -316,7 +645,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "РЕДКИЙ",
     color: "bg-gray-500",
     icon: ScanLine,
-    image: "/assets/archetypes/bore_nerd.webp"
+    image: "/assets/archetypes/bore_nerd.webp",
+    matrix: ARCHETYPE_MATRIX.bore_nerd,
   },
   weekend_alcoholic: {
     id: "weekend_alcoholic",
@@ -326,7 +656,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ЭПИК",
     color: "bg-amber-700",
     icon: AlertTriangle,
-    image: "/assets/archetypes/weekend_alcoholic.webp"
+    image: "/assets/archetypes/weekend_alcoholic.webp",
+    matrix: ARCHETYPE_MATRIX.weekend_alcoholic,
   },
   moms_handsome: {
     id: "moms_handsome",
@@ -336,7 +667,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ОБЫЧНЫЙ",
     color: "bg-rose-400",
     icon: User,
-    image: "/assets/archetypes/moms_handsome.webp"
+    image: "/assets/archetypes/moms_handsome.webp",
+    matrix: ARCHETYPE_MATRIX.moms_handsome,
   },
   clumsy: {
     id: "clumsy",
@@ -346,7 +678,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ОБЫЧНЫЙ",
     color: "bg-orange-500",
     icon: AlertTriangle,
-    image: "/assets/archetypes/clumsy.webp"
+    image: "/assets/archetypes/clumsy.webp",
+    matrix: ARCHETYPE_MATRIX.clumsy,
   },
   normie: {
     id: "normie",
@@ -356,7 +689,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     rarity: "ОБЫЧНЫЙ",
     color: "bg-gray-400",
     icon: Meh,
-    image: "/assets/archetypes/normie.webp"
+    image: "/assets/archetypes/normie.webp",
+    matrix: ARCHETYPE_MATRIX.normie,
   }
 };
 
