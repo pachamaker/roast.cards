@@ -9,7 +9,22 @@ import { SwipeDeck } from "../features/quiz/ui/SwipeDeck";
 import { ResultCard } from "../features/result/ui/ResultCard";
 import { logEvent } from "../shared/lib/analytics";
 
-const IntroScreen = ({ onStart }: { onStart: () => void }) => {
+const formatPeopleLabel = (count: number) => {
+  const lastTwo = count % 100;
+  if (lastTwo >= 11 && lastTwo <= 14) return "человек";
+  const last = count % 10;
+  if (last === 1) return "человек";
+  if (last >= 2 && last <= 4) return "человека";
+  return "человек";
+};
+
+const IntroScreen = ({
+  onStart,
+  roastedTotal
+}: {
+  onStart: () => void;
+  roastedTotal: number | null;
+}) => {
   return (
     <motion.div
       className="flex flex-col items-center justify-center h-full text-center px-6 gap-6"
@@ -30,6 +45,11 @@ const IntroScreen = ({ onStart }: { onStart: () => void }) => {
           <div className="space-y-2 relative z-10 text-center">
             <h1 className="text-5xl font-black italic tracking-tighter drop-shadow-sm">ROAST.CARDS</h1>
             <div className="transform -rotate-2"></div>
+            {roastedTotal !== null && (
+            <p className="gap-2 italic">
+              Всего прожарено {roastedTotal.toLocaleString("ru-RU")} {formatPeopleLabel(roastedTotal)}
+            </p>
+            )}
           </div>
         </div>
       </div>
@@ -79,9 +99,36 @@ export const App = () => {
   const cardRef = useRef<HTMLDivElement | null>(null);
   const exportRef = useRef<HTMLDivElement | null>(null);
   const lastResultId = useRef<string | null>(null);
+  const [roastedTotal, setRoastedTotal] = useState<number | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
   const introLoggedRef = useRef(false);
   const [isSharing, setIsSharing] = useState(false);
+
+  useEffect(() => {
+    const fetchTotal = async () => {
+      try {
+        const response = await fetch("https://api.counterapi.dev/v2/roastcads/roasted");
+        if (!response.ok) {
+          return;
+        }
+        const data = (await response.json()) as {
+          data?: { up_count?: number };
+          up_count?: number;
+          count?: number;
+        };
+        console.log("roasted total response", data);
+        const count = data?.data?.up_count ?? data?.up_count ?? data?.count;
+        if (typeof count === "number") {
+          console.log("roasted total", count);
+          setRoastedTotal(count);
+        }
+      } catch (_error) {
+        // Ignore counter errors to avoid breaking UI.
+      }
+    };
+
+    fetchTotal();
+  }, []);
 
   useEffect(() => {
     if (!result?.image) {
@@ -117,6 +164,30 @@ export const App = () => {
       title: `Я — ${result.title}`,
       id: result.id
     });
+
+    const fetchCounter = async () => {
+      try {
+        const response = await fetch("https://api.counterapi.dev/v2/roastcads/roasted/up");
+        if (!response.ok) {
+          return;
+        }
+        const data = (await response.json()) as {
+          data?: { up_count?: number; count?: number };
+          up_count?: number;
+          count?: number;
+        };
+        console.log("roasted counter response", data);
+        const count = data?.data?.up_count ?? data?.up_count ?? data?.data?.count ?? data?.count;
+        if (typeof count === "number") {
+          console.log("roasted count", count);
+          setRoastedTotal(count);
+        }
+      } catch (_error) {
+        // Ignore counter errors to avoid breaking result screen.
+      }
+    };
+
+    fetchCounter();
   }, [result]);
 
   const handleShare = async () => {
@@ -257,9 +328,16 @@ export const App = () => {
               onStart={() => {
                 setHasStarted(true);
               }}
+              roastedTotal={roastedTotal}
             />
           )}
         </AnimatePresence>
+
+        {hasStarted && roastedTotal !== null && (
+          <div className="mb-4 bg-white border-[3px] border-black px-4 py-2 shadow-[4px_4px_0px_black] text-center font-mono text-[10px] font-bold uppercase">
+            Уже прожарено {roastedTotal.toLocaleString("ru-RU")} {formatPeopleLabel(roastedTotal)}
+          </div>
+        )}
 
         {hasStarted && <SwipeDeck />}
 
@@ -307,7 +385,7 @@ export const App = () => {
                     disabled={isSharing}
                     className="flex-1 bg-[#FF00FF] text-white border-[3px] border-black shadow-[4px_4px_0px_black] py-3 font-black uppercase hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    <Share2 size={18} /> {isSharing ? "Готовим..." : "В СТОРИС"}
+                    <Share2 size={18} /> {isSharing ? "Готовим..." : "ПОДЕЛИТЬСЯ"}
                   </button>
                 </div>
               </div>
