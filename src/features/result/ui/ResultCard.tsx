@@ -17,7 +17,11 @@ export const ResultCard = forwardRef<HTMLDivElement, Props>(
   const hasImage = Boolean(result.image);
   const overlayClass = "opacity-30 mix-blend-multiply";
   const sideRailClass = "bg-black/50 backdrop-blur-sm";
-  const sizeClass = expandHeight ? "min-h-[640px]" : "aspect-[9/16]";
+  const sizeClass = expandHeight
+    ? "min-h-[640px]"
+    : exportMode
+      ? "aspect-[9/16]"
+      : "aspect-auto sm:aspect-[9/16]";
   const contentOffsetClass = exportMode ? "-mt-[2px]" : "";
 
   return (

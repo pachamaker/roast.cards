@@ -63,6 +63,13 @@ const IntroScreen = ({ onStart }: { onStart: () => void }) => {
       >
         НАЧАТЬ <Rocket size={20} />
       </button>
+
+      <p className="text-[10px] leading-relaxed text-gray-600">
+        18+ | Сервис носит исключительно развлекательный и сатирический характер. Все совпадения
+        случайны. Результаты являются шуткой и не имеют целью оскорбить кого-либо, унизить честь и
+        достоинство или разжечь вражду. Нажимая «Начать», вы подтверждаете, что вам есть 18 лет, и вы
+        обладаете чувством юмора и самоиронией.
+      </p>
     </motion.div>
   );
 };
@@ -207,7 +214,11 @@ export const App = () => {
   };
 
   return (
-    <div className="h-[100dvh] bg-[#F0F0F0] overflow-hidden flex flex-col font-sans relative text-black">
+    <div
+      className={`h-[100dvh] bg-[#F0F0F0] flex flex-col font-sans relative text-black ${
+        result ? "overflow-y-auto" : "overflow-hidden"
+      }`}
+    >
       {!result && (
         <>
           <div className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-pink-500 rounded-full blur-[100px] opacity-10"></div>
@@ -261,41 +272,47 @@ export const App = () => {
         )}
 
         {hasStarted && result && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.35 }}
-            className="flex flex-col items-center w-full"
-          >
-            <ResultCard ref={cardRef} result={result} />
+          <>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.35 }}
+              className="flex flex-col items-center w-full pb-28"
+            >
+              <ResultCard ref={cardRef} result={result} />
+            </motion.div>
 
-            <div className="mt-8 flex gap-4 w-full max-w-[360px]">
-              <button
-                type="button"
-                onClick={() => {
-                  logEvent("retry_quiz");
-                  reset();
-                }}
-                aria-label="Начать заново"
-                className="flex-1 bg-white border-[3px] border-black shadow-[4px_4px_0px_black] py-3 font-black uppercase hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all flex items-center justify-center gap-2"
-              >
-                <RefreshCw size={18} /> Заново
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  logEvent("social_sharing");
-                  handleShare();
-                }}
-                aria-label="Сохранить карточку"
-                aria-busy={isSharing}
-                disabled={isSharing}
-                className="flex-1 bg-[#FF00FF] text-white border-[3px] border-black shadow-[4px_4px_0px_black] py-3 font-black uppercase hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-70"
-              >
-                <Share2 size={18} /> {isSharing ? "Готовим..." : "В СТОРИС"}
-              </button>
+            <div className="fixed bottom-0 left-0 right-0 z-30 bg-[#F0F0F0] pb-[env(safe-area-inset-bottom)]">
+              <div className="mx-auto w-full max-w-[360px] px-4 pb-4 pt-3">
+                <div className="flex gap-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      logEvent("retry_quiz");
+                      reset();
+                    }}
+                    aria-label="Начать заново"
+                    className="flex-1 bg-white border-[3px] border-black shadow-[4px_4px_0px_black] py-3 font-black uppercase hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all flex items-center justify-center gap-2"
+                  >
+                    <RefreshCw size={18} /> Заново
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      logEvent("social_sharing");
+                      handleShare();
+                    }}
+                    aria-label="Сохранить карточку"
+                    aria-busy={isSharing}
+                    disabled={isSharing}
+                    className="flex-1 bg-[#FF00FF] text-white border-[3px] border-black shadow-[4px_4px_0px_black] py-3 font-black uppercase hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-70"
+                  >
+                    <Share2 size={18} /> {isSharing ? "Готовим..." : "В СТОРИС"}
+                  </button>
+                </div>
+              </div>
             </div>
-          </motion.div>
+          </>
         )}
       </main>
       {result &&
