@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { AlertTriangle, Check, Flame, RefreshCw, Rocket, ScanLine, Share2 } from "lucide-react";
+import { ArrowRight, Check, Eye, Flame, Globe, RefreshCw, Share2, User, Users } from "lucide-react";
 import { domToPng, waitUntilLoad } from "modern-screenshot";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
@@ -18,71 +18,129 @@ const formatPeopleLabel = (count: number) => {
   return "человек";
 };
 
+const BrandLogo = () => (
+  <div className="relative flex flex-col items-center group mb-6">
+    <img
+      src="/assets/splash_screen.webp"
+      alt="ROAST.CARDS"
+      className="w-[260px] max-w-full h-auto"
+      loading="eager"
+    />
+  </div>
+);
+
 const IntroScreen = ({
   onStart,
-  roastedTotal
+  roastedTotal,
+  lang,
+  gender,
+  onLangChange,
+  onGenderChange
 }: {
   onStart: () => void;
   roastedTotal: number | null;
+  lang: "ru" | "en";
+  gender: "male" | "female";
+  onLangChange: (value: "ru" | "en") => void;
+  onGenderChange: (value: "male" | "female") => void;
 }) => {
   return (
     <motion.div
-      className="flex flex-col items-center justify-center h-full text-center px-6 gap-6"
+      className="flex flex-col items-center h-full text-center px-6 gap-6 pt-6 pb-28"
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.98 }}
       transition={{ duration: 0.25 }}
     >
-      <div className="w-full max-w-sm">
-        <div className="rounded-[32px] px-8 py-10">
-          <motion.div
-            className="mx-auto mb-6 flex h-16 w-16 items-center justify-center"
-            animate={{ y: [0, -5, 0], opacity: [1, 0.9, 1] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+      <BrandLogo />
+
+      {/* <div className="w-full max-w-sm space-y-6">
+        <div className="flex bg-white border-[4px] border-black shadow-[5px_5px_0px_black] p-1">
+          <button
+            type="button"
+            onClick={() => onLangChange("ru")}
+            aria-pressed={lang === "ru"}
+            className={`flex-1 py-2 font-black text-xs uppercase flex items-center justify-center gap-2 transition-all ${
+              lang === "ru" ? "bg-black text-white" : "text-black hover:bg-gray-100"
+            }`}
           >
-            <Flame size={44} className="text-black" />
-          </motion.div>
-          <div className="space-y-2 relative z-10 text-center">
-            <h1 className="text-5xl font-black italic tracking-tighter drop-shadow-sm">ROAST.CARDS</h1>
-            <div className="transform -rotate-2"></div>
-            {roastedTotal !== null && (
-            <p className="gap-2 italic">
-              Всего прожарено {roastedTotal.toLocaleString("ru-RU")} {formatPeopleLabel(roastedTotal)}
-            </p>
-            )}
+            <Globe size={14} /> RU
+          </button>
+          <button
+            type="button"
+            onClick={() => onLangChange("en")}
+            aria-pressed={lang === "en"}
+            className={`flex-1 py-2 font-black text-xs uppercase flex items-center justify-center gap-2 transition-all ${
+              lang === "en" ? "bg-black text-white" : "text-black hover:bg-gray-100"
+            }`}
+          >
+            <Globe size={14} /> EN
+          </button>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <button
+            type="button"
+            onClick={() => onGenderChange("male")}
+            aria-pressed={gender === "male"}
+            className={`bg-white border-[4px] border-black p-5 shadow-[6px_6px_0px_black] active:translate-y-1 active:shadow-none transition-all flex flex-col items-center gap-2 ${
+              gender === "male" ? "bg-blue-50 ring-4 ring-blue-400 ring-inset" : ""
+            }`}
+          >
+            <User size={36} strokeWidth={3} className={gender === "male" ? "text-blue-600" : "opacity-40"} />
+            <span className="font-black text-[10px] uppercase tracking-widest">МАЛЬЧИК</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => onGenderChange("female")}
+            aria-pressed={gender === "female"}
+            className={`bg-white border-[4px] border-black p-5 shadow-[6px_6px_0px_black] active:translate-y-1 active:shadow-none transition-all flex flex-col items-center gap-2 ${
+              gender === "female" ? "bg-pink-50 ring-4 ring-pink-400 ring-inset" : ""
+            }`}
+          >
+            <Users size={36} strokeWidth={3} className={gender === "female" ? "text-pink-600" : "opacity-40"} />
+            <span className="font-black text-[10px] uppercase tracking-widest">ДЕВОЧКА</span>
+          </button>
+        </div>
+      </div> */}
+
+      <div className="w-full max-w-sm bg-white border-[4px] border-black shadow-[8px_8px_0px_black] p-4 space-y-3 text-left">
+        <div className="flex items-start gap-3">
+          <div className="bg-green-500 p-1 border-2 border-black mt-0.5">
+            <Check size={12} strokeWidth={4} className="text-white" />
           </div>
+          <p className="text-[11px] font-black uppercase leading-tight">Отвечай честно (или нагло ври)</p>
+        </div>
+        <div className="flex items-start gap-3">
+          <div className="bg-yellow-400 p-1 border-2 border-black mt-0.5">
+            <Eye size={12} strokeWidth={4} className="text-black" />
+          </div>
+          <p className="text-[11px] font-black uppercase leading-tight">Получи собственную карточку</p>
+        </div>
+        <div className="flex items-start gap-3">
+          <div className="bg-pink-500 p-1 border-2 border-black mt-0.5">
+            <Share2 size={12} strokeWidth={4} className="text-white" />
+          </div>
+          <p className="text-[11px] font-black uppercase leading-tight">Покажи своим друзьям</p>
+        </div>
+        <div className="flex items-start gap-3">
+          {roastedTotal !== null && (
+            <p className="text-[11px] font-black uppercase leading-tight italic">* Уже прожарено {roastedTotal.toLocaleString("ru-RU")} {formatPeopleLabel(roastedTotal)}</p>
+          )}
         </div>
       </div>
 
-      <div className="w-full max-w-sm bg-white border-[3px] border-black p-4 shadow-[6px_6px_0px_rgba(0,0,0,0.18)] text-left space-y-3">
-        <div className="flex items-center gap-2 font-black text-lg uppercase">
-          <AlertTriangle size={20} className="text-black" />
-          <span>Инструкция:</span>
-        </div>
-        <div className="h-[2px] w-full bg-black" />
-        <div className="space-y-3 font-mono text-sm text-black">
-          <p className="flex items-center gap-2">
-            <Check size={18} className="text-green-600" />
-            Отвечай честно (или ври)
-          </p>
-          <p className="flex items-center gap-2">
-            <ScanLine size={18} className="text-blue-600" />
-            Узнай, кто ты
-          </p>
-          <p className="flex items-center gap-2">
-            <Share2 size={18} className="text-pink-500" />
-            Покажи себя другим
-          </p>
+      <div className="w-full bottom-0 left-0 right-0 z-30 pb-[env(safe-area-inset-bottom)]">
+        <div className="mx-auto w-full max-w-sm px-6 pb-5 pt-4">
+          <button
+            type="button"
+            onClick={onStart}
+            className="w-full py-5 font-black text-xl uppercase tracking-tighter flex items-center justify-center gap-3 border-[4px] border-black bg-[#FF00FF] text-white shadow-[8px_8px_0px_black] active:translate-y-2 active:shadow-none cursor-pointer transition-all"
+          >
+            ПОГНАЛИ <ArrowRight strokeWidth={4} />
+          </button>
         </div>
       </div>
-
-      <button
-        type="button"
-        onClick={onStart}
-        className="w-full max-w-sm bg-[#FF00FF] text-white border-[3px] border-black shadow-[4px_4px_0px_black] py-4 font-black text-lg uppercase hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all flex items-center justify-center gap-2"
-      >
-        НАЧАТЬ <Rocket size={20} />
-      </button>
 
       <p className="text-[10px] leading-relaxed text-gray-600">
         18+ | Сервис носит исключительно развлекательный и сатирический характер. Все совпадения
@@ -100,6 +158,8 @@ export const App = () => {
   const exportRef = useRef<HTMLDivElement | null>(null);
   const lastResultId = useRef<string | null>(null);
   const [roastedTotal, setRoastedTotal] = useState<number | null>(null);
+  const [lang, setLang] = useState<"ru" | "en">("ru");
+  const [gender, setGender] = useState<"male" | "female">("male");
   const [hasStarted, setHasStarted] = useState(false);
   const introLoggedRef = useRef(false);
   const [isSharing, setIsSharing] = useState(false);
@@ -300,25 +360,31 @@ export const App = () => {
       )}
 
       {hasStarted && (
-        <header className="p-4 flex justify-between items-center z-20">
-          <button
+        <>
+          {/* <button
             type="button"
             onClick={() => {
               logEvent("click_on_logo");
               reset();
             }}
             aria-label="Сбросить тест"
-            className="group flex items-center gap-2 bg-black text-white px-4 py-2 border-[3px] border-transparent shadow-[4px_4px_0px_#FF00FF] cursor-pointer hover:scale-105 transition-transform rotate-2 hover:rotate-0"
+            className="fixed left-4 top-4 z-30"
           >
-            <Flame size={24} className="text-yellow-400 fill-yellow-400" />
-            <span className="font-black text-xl italic tracking-tighter">ROAST.CARDS</span>
-          </button>
-          {!result && (
-            <div className="font-mono text-sm font-bold bg-white border-[3px] border-black px-3 py-1 shadow-[3px_3px_0px_black]">
-              {Math.min(currentIndex + 1, QUESTIONS.length)}/{QUESTIONS.length}
-            </div>
-          )}
-        </header>
+            <img
+              src="/assets/logo.webp"
+              alt="ROAST.CARDS"
+              className="w-[220px] max-w-full h-auto"
+              loading="eager"
+            />
+          </button> */}
+          {/* <header className="p-4 flex justify-end items-center z-20">
+            {!result && (
+              <div className="font-mono text-sm font-bold bg-white border-[3px] border-black px-3 py-1 shadow-[3px_3px_0px_black]">
+                {Math.min(currentIndex + 1, QUESTIONS.length)}/{QUESTIONS.length}
+              </div>
+            )}
+          </header> */}
+        </>
       )}
 
       <main className="flex-1 flex flex-col items-center justify-center relative w-full px-4 pb-12">
@@ -326,18 +392,17 @@ export const App = () => {
           {!hasStarted && (
             <IntroScreen
               onStart={() => {
+                logEvent("quiz_start");
                 setHasStarted(true);
               }}
               roastedTotal={roastedTotal}
+              lang={lang}
+              gender={gender}
+              onLangChange={setLang}
+              onGenderChange={setGender}
             />
           )}
         </AnimatePresence>
-
-        {hasStarted && roastedTotal !== null && (
-          <div className="mb-4 bg-white border-[3px] border-black px-4 py-2 shadow-[4px_4px_0px_black] text-center font-mono text-[10px] font-bold uppercase">
-            Уже прожарено {roastedTotal.toLocaleString("ru-RU")} {formatPeopleLabel(roastedTotal)}
-          </div>
-        )}
 
         {hasStarted && <SwipeDeck />}
 
@@ -355,7 +420,7 @@ export const App = () => {
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.35 }}
-              className="flex flex-col items-center w-full pb-28"
+              className="flex flex-col items-center w-full pb-28 pt-5"
             >
               <ResultCard ref={cardRef} result={result} />
             </motion.div>
