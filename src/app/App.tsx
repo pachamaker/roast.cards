@@ -1,9 +1,13 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Check, Eye, Flame, Globe, RefreshCw, Share2, User, Users } from "lucide-react";
+import { ArrowRight, Check, Eye, 
+  // Flame, Globe, 
+  RefreshCw, Share2, 
+  // User, Users 
+} from "lucide-react";
 import { domToPng, waitUntilLoad } from "modern-screenshot";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
-import { QUESTIONS } from "../data/questions";
+//import { QUESTIONS } from "../data/questions";
 import { useQuizStore } from "../features/quiz/model/useQuizStore";
 import { SwipeDeck } from "../features/quiz/ui/SwipeDeck";
 import { ResultCard } from "../features/result/ui/ResultCard";
@@ -32,10 +36,10 @@ const BrandLogo = () => (
 const IntroScreen = ({
   onStart,
   roastedTotal,
-  lang,
-  gender,
-  onLangChange,
-  onGenderChange
+  // lang,
+  // gender,
+  // onLangChange,
+  // onGenderChange
 }: {
   onStart: () => void;
   roastedTotal: number | null;
@@ -153,7 +157,7 @@ const IntroScreen = ({
 };
 
 export const App = () => {
-  const { currentIndex, loading, result, reset } = useQuizStore();
+  const { loading, result, reset } = useQuizStore();
   const cardRef = useRef<HTMLDivElement | null>(null);
   const exportRef = useRef<HTMLDivElement | null>(null);
   const lastResultId = useRef<string | null>(null);
